@@ -8,6 +8,14 @@
 </head>
 <body>
     <h1>Login Successful</h1>
+    
+     <p style="color:red;">
+        <%= request.getAttribute("errorMessage") != null ? request.getAttribute("errorMessage") : "" %>
+    </p>
+    
+    <p style="color:green;">
+        <%= request.getAttribute("message") != null ? request.getAttribute("message") : "" %>
+    </p>
     <h2>Welcome, <%= session.getAttribute("userName") != null ? session.getAttribute("userName") : "Guest" %>!</h2>
 
     <form action="BalanceServlet" method="post"> 

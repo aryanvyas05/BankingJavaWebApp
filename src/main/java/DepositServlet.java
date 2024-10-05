@@ -16,12 +16,28 @@ public class DepositServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String accountNumber = request.getParameter("userID");
-        double depositAmount = Double.parseDouble(request.getParameter("depositAmount"));
+        double depositAmount;
+
+        
+        try {
+            depositAmount = Double.parseDouble(request.getParameter("depositAmount"));
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid deposit amount! Please enter a numeric value.");
+            request.getRequestDispatcher("welcome.jsp").forward(request, response);
+            return;
+        }
+
+        
+        if (depositAmount <= 0) {
+            request.setAttribute("errorMessage", "Deposit amount must be positive!");
+            request.getRequestDispatcher("welcome.jsp").forward(request, response);
+            return;
+        }
 
         final String dburl = "jdbc:postgresql://localhost/BankingApplication";
         final String dbuser = "postgres";
         final String dbpassword = "Sujangarh@1";
-        
+
         try {
             Class.forName("org.postgresql.Driver");
             Connection conn = DriverManager.getConnection(dburl, dbuser, dbpassword);
@@ -31,22 +47,18 @@ public class DepositServlet extends HttpServlet {
             stmt.setDouble(1, depositAmount);
             stmt.setString(2, accountNumber);
             int rs = stmt.executeUpdate();
-            
-            if (rs> 0) {
-                
+
+            if (rs > 0) {
                 request.setAttribute("message", "Deposit successful!");
-                request.getRequestDispatcher("welcome.jsp").forward(request, response);
             } else {
                 request.setAttribute("errorMessage", "Deposit failed. Try again.");
-                request.getRequestDispatcher("welcome.jsp").forward(request, response);
             }
             stmt.close();
             conn.close();
-    }catch (Exception e) {
-        e.printStackTrace();
-        request.setAttribute("errorMessage", "Error: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Error: " + e.getMessage());
+        }
         request.getRequestDispatcher("welcome.jsp").forward(request, response);
-    	}
     }
-        
 }
