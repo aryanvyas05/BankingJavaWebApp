@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Deposit Money</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
     <h1>Deposit Money</h1>
@@ -15,6 +16,6 @@
     <input type="submit" value="Deposit">
 </form>
 
-    <a href="welcome.jsp">Back to Welcome</a>
+    <a href="welcome.jsp" class = "logout">Back to Welcome</a>
 </body>
 </html>

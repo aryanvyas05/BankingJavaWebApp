@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Withdraw Money</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 	<h1>Withdraw Money</h1>
@@ -16,6 +17,6 @@
 </form>
 
 
-	<a href="welcome.jsp">Back to Welcome</a>
+	<a href="welcome.jsp" class = "logout">Back to Welcome</a>
 </body>
 </html>

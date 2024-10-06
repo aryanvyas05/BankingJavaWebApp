@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -24,14 +23,10 @@ public class WithdrawServlet extends HttpServlet {
             request.getRequestDispatcher("welcome.jsp").forward(request, response);
             return;
         }
-
-        final String dburl = "jdbc:postgresql://localhost/BankingApplication";
-        final String dbuser = "postgres";
-        final String dbpassword = "Sujangarh@1";
-
+        
+        
         try {
-            Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(dburl, dbuser, dbpassword);
+        	Connection conn = DBConnection.getConnnection();
             
             
             String balanceQuery = "SELECT balance FROM user_balance WHERE accountnumber = ?";
@@ -55,7 +50,15 @@ public class WithdrawServlet extends HttpServlet {
                 int rowsUpdated = stmt.executeUpdate();
 
                 if (rowsUpdated > 0) {
+                	String transactionSql = "INSERT INTO transaction_history (accountnumber, transaction_type, amount, transaction_date) "
+                            + "VALUES (?, 'Withdrawal', ?, CURRENT_TIMESTAMP)";
+                	PreparedStatement transactionStmt = conn.prepareStatement(transactionSql);
+                	transactionStmt.setString(1, accountNumber);
+                	transactionStmt.setDouble(2, withdrawalAmount);
+                	transactionStmt.executeUpdate();
+      
                     request.setAttribute("message", "Withdrawal successful! New balance: $" + (currentBalance - withdrawalAmount));
+                    
                 } else {
                     request.setAttribute("errorMessage", "Withdrawal failed. Please try again.");
                 }

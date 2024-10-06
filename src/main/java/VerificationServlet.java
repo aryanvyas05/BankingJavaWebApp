@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -21,14 +20,8 @@ public class VerificationServlet extends HttpServlet {
         String accountNumber = request.getParameter("userID");
         String password = request.getParameter("userPassword");
 
-        final String dburl = "jdbc:postgresql://localhost/BankingApplication";
-        final String dbuser = "postgres";
-        final String dbpassword = "Sujangarh@1";
-
         try { 
-            Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(dburl, dbuser, dbpassword);
-
+        	Connection conn = DBConnection.getConnnection();
            
             String sql = "SELECT name, accountnumber FROM user_info WHERE accountnumber=? AND user_password=?";
             PreparedStatement stmt = conn.prepareStatement(sql);

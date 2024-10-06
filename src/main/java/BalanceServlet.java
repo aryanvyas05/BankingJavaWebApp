@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -18,14 +17,9 @@ import jakarta.servlet.http.HttpServletResponse;
 	            throws ServletException, IOException {
 	        String accountNumber = request.getParameter("userID");
 	
-	        final String dburl = "jdbc:postgresql://localhost/BankingApplication";
-	        final String dbuser = "postgres";
-	        final String dbpassword = "Sujangarh@1";
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            Connection conn = DriverManager.getConnection(dburl, dbuser, dbpassword);
-
+	     try {
+	    	 Connection conn = DBConnection.getConnnection();
+            
             String sql = "SELECT balance FROM user_balance WHERE accountnumber = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, accountNumber);

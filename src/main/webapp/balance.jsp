@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Account Balance</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
     <h1>Your Account Balance</h1>
@@ -22,6 +23,6 @@
             }
         }
     %>
-    <a href="welcome.jsp">Go Back</a>
+    <a href="welcome.jsp" class = "logout">Go Back</a>
 </body>
 </html>
