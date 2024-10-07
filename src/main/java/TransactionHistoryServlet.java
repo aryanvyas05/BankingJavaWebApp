@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class TransactionHistoryServlet extends HttpServlet {
 				transaction[0] = rs.getString("transaction_id");
 				transaction[1] = rs.getString("transaction_type");
 				transaction[2] = rs.getString("amount");
-				transaction[4] = rs.getString("transaction_date");
+				transaction[3] = rs.getString("transaction_date");
 				
 				transactions.add(transaction);
 			}

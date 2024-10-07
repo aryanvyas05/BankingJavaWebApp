@@ -26,7 +26,11 @@
       <form action = "withdraw.jsp" method = "get">
          <input type="submit" value="Withdraw amount">
       </form>
-      >
+      
+      <form action="TransactionHistoryServlet" method="post"> 
+         <input type="hidden" name="userID" value="<%= session.getAttribute("accountNumber") %>">
+         <input type="submit" value="View Transaction History">
+      </form>
       <a href="input.jsp" class= "logout">Log Out</a>
    </body>
 </html>
